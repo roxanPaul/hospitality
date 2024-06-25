@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Billing Statements</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Billing Statements</h1>
+
+        {% if bills %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Bill ID</th>
+                        <th>Amount Due</th>
+                        <th>Due Date</th>
+                        <th>Payment Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bill in bills %}
+                        <tr>
+                            <td>{{ bill.id }}</td>
+                            <td>{{ bill.amount_due }}</td>
+                            <td>{{ bill.due_date }}</td>
+                            <td>{{ bill.get_payment_status_display }}</td>
+                            <td>
+                                {% if bill.payment_status != 'paid' %}
+                                    <a href="{% url 'create_billing_session' bill.id %}">Pay Now</a>
+                                {% else %}
+                                    Paid
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No billing statements found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+{% endblock %}

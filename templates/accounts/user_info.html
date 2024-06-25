@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Successful</title>
+</head>
+<body>
+    <h2>Welcome, {{ user.username }}</h2>
+    <p>Email: {{ user.email }}</p>
+    <p>Role: {{ user.userprofile.role }}</p> <!-- Assuming UserProfile model has role field -->
+
+    <h3>User Permissions:</h3>
+    <ul>
+        {% for perm in user.get_all_permissions %}
+            <li>{{ perm }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Groups:</h3>
+    <ul>
+        {% for group in user.groups.all %}
+            <li>{{ group }}</li>
+        {% endfor %}
+    </ul>
+
+    <!-- Add additional information or functionality here -->
+</body>
+</html>
